@@ -31,3 +31,4 @@ C:\Users\W11\Desktop\STUDIA\ARBD\Tutorial4\obj\Debug\net9.0\refint\Tutorial4.dll
 C:\Users\W11\Desktop\STUDIA\ARBD\Tutorial4\obj\Debug\net9.0\Tutorial4.pdb
 C:\Users\W11\Desktop\STUDIA\ARBD\Tutorial4\obj\Debug\net9.0\Tutorial4.genruntimeconfig.cache
 C:\Users\W11\Desktop\STUDIA\ARBD\Tutorial4\obj\Debug\net9.0\ref\Tutorial4.dll
+C:\Users\W11\Desktop\STUDIA\ARBD\Tutorial4\obj\Debug\net9.0\Tutorial4.sourcelink.json

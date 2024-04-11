@@ -1,9 +1,13 @@
+using Tutorial4.Database;
+using Tutorial4.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();  // tu dodajemy tą klasę z końcówkai
+builder.Services.AddSingleton<MockDb>();
 
 var app = builder.Build();
 
@@ -16,27 +20,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/animals", () =>
-{
-    // 200 - OK
-    // 404 - Not Found
-    // 403 - Forbidden
-    // 201 - Created
-    // 400 - Bad request
-    // 401 - Unauthorized
-    
-    return Results.Ok();
-});
+app.MapAnimalEndpoints();
 
-app.MapGet("/animals/{id}", (int id) =>
-{
-    return Results.Ok(id);
-});
-
-app.MapPost("/animals", () =>
-{
-    return Results.Created();
-});
+app.MapControllers(); // i tu dodajemy klasę końcowke 
 
 var summaries = new[]
 {
@@ -57,6 +43,8 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+
 
 app.Run();
 
