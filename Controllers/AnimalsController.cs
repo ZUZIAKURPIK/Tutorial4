@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Tutorial4.Database;
+using Tutorial4.Models;
 
 namespace Tutorial4.Controllers;
 
@@ -8,26 +9,59 @@ namespace Tutorial4.Controllers;
 [Route("/animals-controller")]
 public class AnimalsController : ControllerBase
 {
+    public static MockDb _db = new MockDb();
+    
     [HttpGet]
     public IActionResult GetAnimals()
     {
-        var animals = new MockDb().animals;
+        var animals = _db.Animals;
         return Ok(animals);
     }
     
     [HttpGet("{id}")]
     public IActionResult GetAnimalsById(int id)
     {
-        return Ok(id);
+        var animal = _db.Animals.FirstOrDefault(a => a.Id == id);
+        if (animal == null)
+        {
+            return NotFound();
+        }
+        return Ok(animal);
     }
     
     [HttpPost]
-    public IActionResult AddAnimals()
+    public IActionResult AddAnimals(Animal animal)
     {
-        return Created();
+        _db.Animals.Add(animal);
+        return CreatedAtAction(nameof(GetAnimalsById), new{id = animal.Id}, animal);
     }
-    
-    
-    
-    // drugi sposób robienia końcówke ale nie daje to działania w aplikacji
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateAnimal(int id, Animal animal)
+    {
+        var existingAnimal = _db.Animals.FirstOrDefault(a => a.Id == id);
+        if (existingAnimal == null)
+        {
+            return NotFound();
+        }
+
+        existingAnimal.Name = animal.Name;
+        existingAnimal.Category = animal.Category;
+        existingAnimal.Weight = animal.Weight;
+        existingAnimal.FurColor = animal.FurColor;
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DelateAnimal(int id)
+    {
+        var animal = _db.Animals.FirstOrDefault(a => a.Id == id);
+        if (animal == null)
+        {
+            return NotFound();
+        }
+
+        _db.Animals.Remove(animal);
+        return NoContent();
+    }
 }
